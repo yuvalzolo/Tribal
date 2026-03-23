@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+            <fullName>CHE_Game_Notation__c</fullName>
+            <label>Game Notation</label>
+            <description>PGN notation for the complete game</description>
+            <type>LongTextArea</type>
+            <length>32768</length>
+            <visibleLines>10</visibleLines>
+            <trackHistory>false</trackHistory>
+            
+            <!-- Field Level Security - Visible and Editable for all profiles by default -->
+            <securityClassification>Public</securityClassification>
+            <complianceGroup>None</complianceGroup>
+
+        </CustomField>

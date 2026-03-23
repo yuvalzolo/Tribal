@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+            <deploymentStatus>Deployed</deploymentStatus>
+            <description>Tracks individual chess games with white/black players, game status, winner, result, PGN notation, move count, and ELO ratings before/after for both players</description>
+            <enableActivities>true</enableActivities>
+            <enableBulkApi>true</enableBulkApi>
+            <enableFeeds>true</enableFeeds>
+            <enableHistory>true</enableHistory>
+            <enableReports>true</enableReports>
+            <enableSearch>true</enableSearch>
+            <enableSharing>true</enableSharing>
+            <enableStreamingApi>true</enableStreamingApi>
+            <externalSharingModel>Private</externalSharingModel>
+            <label>Chess Game</label>
+            <nameField>
+                <displayFormat>CHG--{00000}</displayFormat>
+                <label>Game Number</label>
+                <type>AutoNumber</type>
+            </nameField>
+            <pluralLabel>Chess Games</pluralLabel>
+            <searchLayouts>
+                <searchFilterFields>NAME</searchFilterFields>
+                <searchResultsAdditionalFields>CREATED_DATE</searchResultsAdditionalFields>
+            </searchLayouts>
+            <sharingModel>ReadWrite</sharingModel>
+            <visibility>Public</visibility>
+        </CustomObject>

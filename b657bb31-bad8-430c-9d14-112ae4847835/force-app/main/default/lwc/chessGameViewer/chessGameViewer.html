@@ -1,0 +1,144 @@
+<template>
+    <lightning-card title="Chess Game Viewer" icon-name="custom:custom9">
+        <div class="slds-p-around_medium">
+            <!-- Game Selection Section -->
+            <div class="slds-m-bottom_medium">
+                <lightning-combobox
+                    name="gameSelect"
+                    label="Select a Game"
+                    value={selectedGameId}
+                    placeholder="Choose a game to view"
+                    options={gameOptions}
+                    onchange={handleGameSelect}
+                    class="slds-m-bottom_small"
+                ></lightning-combobox>
+            </div>
+
+            <!-- Error Message -->
+            <template if:true={errorMessage}>
+                <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+                    <span class="slds-assistive-text">error</span>
+                    <h2>{errorMessage}</h2>
+                </div>
+            </template>
+
+            <!-- Main Content - Chess Board and Game Info -->
+            <template if:true={currentGame}>
+                <div class="chess-viewer-container">
+                    <!-- Player Information Panels -->
+                    <div class="player-info-container">
+                        <!-- Black Player Info (Top) -->
+                        <div class="player-panel black-player">
+                            <div class="player-details">
+                                <h3 class="slds-text-heading_small">{currentGame.blackPlayerName}</h3>
+                                <p class="player-elo">ELO: {currentGame.blackPlayerElo}</p>
+                            </div>
+                            <div class="captured-pieces" data-color="white">
+                                <!-- Captured white pieces will be displayed here -->
+                            </div>
+                        </div>
+
+                        <!-- Chess Board -->
+                        <div class="chess-board-wrapper">
+                            <div class="chess-board">
+                                <!-- Rank Labels (8-1) -->
+                                <div class="rank-labels">
+                                    <div class="rank-label">8</div>
+                                    <div class="rank-label">7</div>
+                                    <div class="rank-label">6</div>
+                                    <div class="rank-label">5</div>
+                                    <div class="rank-label">4</div>
+                                    <div class="rank-label">3</div>
+                                    <div class="rank-label">2</div>
+                                    <div class="rank-label">1</div>
+                                </div>
+
+                                <!-- Board Squares -->
+                                <div class="board-grid">
+                                    <template for:each={boardSquares} for:item="square">
+                                        <div key={square.id} class={square.class} data-square={square.notation}>
+                                            <span class="piece">{square.piece}</span>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <!-- File Labels (A-H) -->
+                                <div class="file-labels">
+                                    <div class="file-label">A</div>
+                                    <div class="file-label">B</div>
+                                    <div class="file-label">C</div>
+                                    <div class="file-label">D</div>
+                                    <div class="file-label">E</div>
+                                    <div class="file-label">F</div>
+                                    <div class="file-label">G</div>
+                                    <div class="file-label">H</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- White Player Info (Bottom) -->
+                        <div class="player-panel white-player">
+                            <div class="player-details">
+                                <h3 class="slds-text-heading_small">{currentGame.whitePlayerName}</h3>
+                                <p class="player-elo">ELO: {currentGame.whitePlayerElo}</p>
+                            </div>
+                            <div class="captured-pieces" data-color="black">
+                                <!-- Captured black pieces will be displayed here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Move History Panel -->
+                    <div class="move-history-panel">
+                        <div class="panel-header">
+                            <h3 class="slds-text-heading_small">Move History</h3>
+                        </div>
+                        <div class="panel-content">
+                            <template if:true={currentGame.gameNotation}>
+                                <div class="move-list">
+                                    <p class="game-notation">{currentGame.gameNotation}</p>
+                                </div>
+                            </template>
+                            <template if:false={currentGame.gameNotation}>
+                                <p class="slds-text-color_weak">No moves recorded yet</p>
+                            </template>
+                        </div>
+
+                        <!-- Game Details -->
+                        <div class="game-details slds-m-top_medium">
+                            <div class="detail-row">
+                                <span class="detail-label">Status:</span>
+                                <span class="detail-value">{currentGame.gameStatus}</span>
+                            </div>
+                            <template if:true={currentGame.gameResult}>
+                                <div class="detail-row">
+                                    <span class="detail-label">Result:</span>
+                                    <span class="detail-value">{currentGame.gameResult}</span>
+                                </div>
+                            </template>
+                            <template if:true={currentGame.winnerName}>
+                                <div class="detail-row">
+                                    <span class="detail-label">Winner:</span>
+                                    <span class="detail-value">{currentGame.winnerName}</span>
+                                </div>
+                            </template>
+                            <template if:true={currentGame.numberOfMoves}>
+                                <div class="detail-row">
+                                    <span class="detail-label">Moves:</span>
+                                    <span class="detail-value">{currentGame.numberOfMoves}</span>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <!-- No Game Selected Message -->
+            <template if:false={currentGame}>
+                <div class="slds-text-align_center slds-p-vertical_large">
+                    <p class="slds-text-color_weak">Please select a game to view</p>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

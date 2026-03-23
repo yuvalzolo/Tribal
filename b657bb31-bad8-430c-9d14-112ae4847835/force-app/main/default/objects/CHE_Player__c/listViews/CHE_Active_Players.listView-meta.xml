@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+            <fullName>CHE_Active_Players</fullName>
+            <label>Active Players</label>
+            <filterScope>Everything</filterScope>
+            
+            <columns>NAME</columns>
+            
+            <columns>CHE_Player_Name__c</columns>
+            
+            <columns>CHE_ELO_Rating__c</columns>
+            
+            <columns>CHE_Total_Games_Played__c</columns>
+            
+            <columns>CHE_Win_Rate__c</columns>
+            
+            <columns>CHE_Active_Player__c</columns>
+            
+        </ListView>

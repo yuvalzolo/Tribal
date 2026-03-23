@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+            <fullName>CHE_Latest_Rankings</fullName>
+            <label>Latest Rankings</label>
+            <filterScope>Everything</filterScope>
+            
+            <columns>NAME</columns>
+            
+            <columns>CHE_Player__c</columns>
+            
+            <columns>CHE_Rank_Position__c</columns>
+            
+            <columns>CHE_ELO_Rating__c</columns>
+            
+            <columns>CHE_Rank_Date__c</columns>
+            
+            <columns>CHE_Win_Rate__c</columns>
+            
+        </ListView>

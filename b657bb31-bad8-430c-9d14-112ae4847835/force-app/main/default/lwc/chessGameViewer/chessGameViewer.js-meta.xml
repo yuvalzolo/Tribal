@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+            <apiVersion>66.0</apiVersion>
+            <description>Interactive chess board displaying visual 8x8 board with pieces, player info panels with ELO ratings, captured pieces, move history with algebraic notation, and board coordinates</description>
+            <isExposed>True</isExposed>
+            <masterLabel>Chess Game Viewer</masterLabel>
+            <targets>
+                
+                <target>lightning__AppPage</target>
+                
+                <target>lightning__RecordPage</target>
+                
+            </targets>
+        </LightningComponentBundle>

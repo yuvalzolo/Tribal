@@ -1,0 +1,52 @@
+sequenceDiagram
+    actor Admin as Admin/User
+    participant UI as Chess Game UI
+    participant Controller as Apex Controller
+    participant Trigger as Chess Game Trigger
+    participant Handler as Trigger Handler
+    participant DB as Database
+    participant Viewer as Chess Viewer Component
+
+    Admin->>UI: Create/Update Chess Game
+    UI->>Controller: Save Game Record
+    Controller->>DB: Insert/Update Game
+    DB-->>Controller: Game Saved
+    
+    alt Game Status = "Completed"
+        Trigger->>Handler: After Insert/Update
+        Handler->>DB: Query Players & Game
+        DB-->>Handler: Player & Game Data
+        
+        Handler->>Handler: Calculate Expected Scores
+        Handler->>Handler: Determine Actual Scores
+        Handler->>Handler: Calculate New ELO Ratings
+        
+        Handler->>DB: Update Player ELO Ratings
+        Handler->>DB: Update Player Statistics
+        Handler->>DB: Update Game with ELO Info
+        Handler->>DB: Create Player Rank Snapshot
+        
+        Handler->>Handler: Calculate Rank Positions
+        Handler->>DB: Update Rank Positions
+        
+        DB-->>Handler: All Updates Complete
+    end
+    
+    Controller-->>UI: Game Saved Successfully
+    UI-->>Admin: Confirmation
+    
+    Admin->>Viewer: View Game on Chess Board
+    Viewer->>Controller: Get Game Data
+    Controller->>DB: Query Game & Moves
+    DB-->>Controller: Game Data
+    Controller-->>Viewer: Game Data
+    
+    Viewer->>Viewer: Parse FEN Notation
+    Viewer->>Viewer: Render Chess Board
+    Viewer->>Viewer: Display Player Info
+    Viewer->>Viewer: Show Move History
+    
+    Viewer-->>Admin: Interactive Chess Board Display
+    Admin->>Viewer: Navigate Move History
+    Viewer->>Viewer: Update Board Position
+    Viewer-->>Admin: Updated Position Display

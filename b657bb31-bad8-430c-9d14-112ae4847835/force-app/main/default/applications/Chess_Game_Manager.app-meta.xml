@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+            <brand>
+                <headerColor>#0176D3</headerColor>
+                <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
+            </brand>
+            <description>Custom application for managing chess players, games, rankings, and viewing interactive chess board</description>
+            <formFactors>Large</formFactors>
+            <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+            <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+            <label>Chess Game Manager</label>
+            <navType>Standard</navType>
+            
+            <tabs>CHE_Player__c</tabs>
+            
+            <tabs>CHE_Chess_Game__c</tabs>
+            
+            <tabs>CHE_Player_Rank__c</tabs>
+            
+            <tabs>Game_Viewer</tabs>
+            
+            <uiType>Lightning</uiType>
+        </CustomApplication>
