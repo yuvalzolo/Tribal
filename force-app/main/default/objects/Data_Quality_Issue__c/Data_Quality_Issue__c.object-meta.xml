@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+            <deploymentStatus>Deployed</deploymentStatus>
+            <description>Stores data quality issues detected by the Data Quality Monitoring Agent. Each record represents a specific field-level issue on a Lead, Account, or Opportunity record, including the error details, suggested fix, priority, and current resolution status.</description>
+            <enableActivities>true</enableActivities>
+            <enableBulkApi>true</enableBulkApi>
+            <enableFeeds>true</enableFeeds>
+            <enableHistory>true</enableHistory>
+            <enableReports>true</enableReports>
+            <enableSearch>true</enableSearch>
+            <enableSharing>true</enableSharing>
+            <enableStreamingApi>true</enableStreamingApi>
+            <externalSharingModel>Private</externalSharingModel>
+            <label>Data Quality Issue</label>
+            <nameField>
+                <displayFormat>DQI--{00000}</displayFormat>
+                <label>Issue Number</label>
+                <type>AutoNumber</type>
+            </nameField>
+            <pluralLabel>Data Quality Issues</pluralLabel>
+            <searchLayouts>
+                <searchFilterFields>NAME</searchFilterFields>
+                <searchResultsAdditionalFields>CREATED_DATE</searchResultsAdditionalFields>
+            </searchLayouts>
+            <sharingModel>ReadWrite</sharingModel>
+            <visibility>Public</visibility>
+        </CustomObject>

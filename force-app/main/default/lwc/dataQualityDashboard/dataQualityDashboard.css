@@ -1,0 +1,31 @@
+.critical-color {
+    color: #c23934;
+}
+
+.success-color {
+    color: #027e46;
+}
+
+.slds-notify_container {
+    position: fixed;
+    top: 3rem;
+    right: 1rem;
+    z-index: 9999;
+}
+
+.slds-notify_toast {
+    width: 30rem;
+}
+
+table {
+    width: 100%;
+}
+
+th {
+    font-weight: 700;
+    padding: 0.5rem;
+}
+
+td {
+    padding: 0.5rem;
+}

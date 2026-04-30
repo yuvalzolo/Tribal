@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+            <fullName>Suggested_Fix__c</fullName>
+            <label>Suggested Fix</label>
+            <description>The suggested correction value for the field that can be applied by the agent with owner approval</description>
+            <type>Text</type>
+            <length>255</length>
+            <required>false</required>
+            <trackHistory>false</trackHistory>
+            
+            <!-- Field Level Security - Visible and Editable for all profiles by default -->
+            <securityClassification>Public</securityClassification>
+            <complianceGroup>None</complianceGroup>
+        </CustomField>

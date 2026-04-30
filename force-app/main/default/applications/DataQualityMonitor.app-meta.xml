@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+            <brand>
+                <headerColor>#0176D3</headerColor>
+                <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
+            </brand>
+            <description>Application for monitoring and managing data quality issues on Lead, Account, and Opportunity records. Includes dashboard and issue management views.</description>
+            <formFactors>Large</formFactors>
+            <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+            <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+            <label>Data Quality Monitor</label>
+            <navType>Standard</navType>
+            
+            <tabs>Data_Quality_Issue__c</tabs>
+            
+            <tabs>DataQualityDashboard</tabs>
+            
+            <uiType>Lightning</uiType>
+        </CustomApplication>

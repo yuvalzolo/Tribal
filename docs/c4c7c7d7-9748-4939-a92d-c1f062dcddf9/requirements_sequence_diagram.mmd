@@ -1,0 +1,40 @@
+sequenceDiagram
+    participant Admin as Administrator
+    participant Scheduler as DataQualityScanScheduler
+    participant Batch as DataQualityScanBatch
+    participant DB as Salesforce DB
+    participant Agent as Agentforce Agent
+    participant NotifService as NotificationService
+    participant Owner as Record Owner
+    participant Slack as Slack/Teams/Email
+    participant UpdateService as UpdateRecordField
+
+    Admin->>Scheduler: Configure & Schedule Scan
+    Scheduler->>Batch: Trigger Batch Job
+    Batch->>DB: Query Active Validation Rules
+    DB-->>Batch: Return Rules
+    Batch->>DB: Query Lead/Account/Opportunity Records
+    DB-->>Batch: Return Records
+    Batch->>Batch: Evaluate Conditions Against Rules
+    Batch->>DB: Create Data_Quality_Issue Records
+    DB-->>Batch: Issues Stored
+    Batch->>Agent: Invoke detectDataQualityIssues
+    Agent->>NotifService: Call notifyRecordOwner
+    NotifService->>DB: Update Issue Status to "Notified"
+    NotifService->>Slack: Send Notification with Approve/Manual Options
+    Slack-->>Owner: Receive Notification
+    Owner->>Owner: Review Issue & Suggested Fix
+    alt Owner Approves Fix
+        Owner->>Agent: Click "Approve Fix"
+        Agent->>UpdateService: Call updateRecordField
+        UpdateService->>DB: Validate & Update Record Field
+        DB-->>UpdateService: Field Updated
+        UpdateService->>DB: Update Issue Status to "Fixed"
+        UpdateService->>NotifService: Send Confirmation
+        NotifService->>Slack: Notify Owner of Completion
+    else Owner Handles Manually
+        Owner->>Agent: Click "I'll Handle It Manually"
+        Agent->>DB: Update Issue Status to "Owner Responded"
+        Agent->>Agent: Schedule 24hr Follow-up Verification
+    end
+    Admin->>DB: View Scan Results & Audit Trail

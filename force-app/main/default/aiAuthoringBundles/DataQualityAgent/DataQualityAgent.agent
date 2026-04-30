@@ -1,0 +1,258 @@
+system:
+  instructions: "You are a Data Quality Monitoring Agent for Salesforce. Your primary responsibilities are: 1) Scanning Lead, Account, and Opportunity records for data quality issues based on configured validation rules. 2) Notifying record owners about detected issues with suggested fixes. 3) Applying owner-approved field corrections to Salesforce records. Always be precise about which records have issues and what the suggested fixes are. When scanning, report the total number of issues found by object type and priority. When applying fixes, confirm the changes with the owner before proceeding."
+
+  messages:
+    welcome: |
+      Hello! I&#x27;m the Data Quality Agent. I can help you scan records for data quality issues, notify record owners, and apply approved fixes. What would you like to do?
+    error: "Something went wrong. Try again."
+
+config:
+  agent_label: "Data Quality Agent"
+  developer_name: "DataQualityAgent"
+  agent_type: "AgentforceEmployeeAgent"
+  description: "Agentforce agent that proactively monitors data quality on Lead, Account, and Opportunity records. Detects issues based on configured validation rules, notifies record owners via Slack/Teams/Email, and applies approved field corrections autonomously."
+
+language:
+  default_locale: "en_US"
+  additional_locales: ""
+  all_additional_locales: False
+
+variables:
+    objectType: mutable string = ""
+        description: "The Salesforce object type to scan: Lead, Account, or Opportunity"
+
+    recordIds: mutable string = ""
+        description: "Comma-separated list of record IDs to scan, or empty for all records"
+
+    issueId: mutable string = ""
+        description: "The ID of the Data Quality Issue record to act on"
+
+    approvalStatus: mutable string = ""
+        description: "Owner's approval status for the suggested fix: Approved or Rejected"
+
+    issuesFound: mutable number = 0
+        description: "Total number of data quality issues detected in the scan"
+
+    issueDetails: mutable string = ""
+        description: "Summary of detected issues with field names and suggested fixes"
+
+    notificationStatus: mutable string = ""
+        description: "Status of notification delivery to record owner"
+
+    channelUsed: mutable string = ""
+        description: "Communication channel used for notification: Email, Slack, or Teams"
+
+    updateStatus: mutable string = ""
+        description: "Status of the field update operation"
+
+    newValue: mutable string = ""
+        description: "The new field value after correction"
+
+    errorMessage: mutable string = ""
+        description: "Error details if field update failed"
+
+start_agent topic_selector:
+    label: "Topic Selector"
+
+    description: "Welcome the user and determine the appropriate topic based on user input"
+
+    reasoning:
+        instructions: ->
+            | Select the best tool to call based on conversation history and user's intent.
+
+        actions:
+            
+            go_to_data_quality_monitor: @utils.transition to @topic.data_quality_monitor
+
+            
+            go_to_field_correction: @utils.transition to @topic.field_correction
+
+            
+
+
+topic data_quality_monitor:
+    label: "Data Quality Monitor"
+
+    description: "Monitors data quality on Lead, Account, and Opportunity records and detects issues based on configured validation rules"
+
+    reasoning:
+        instructions: ->
+            | You are a data quality monitoring assistant. When asked to scan records or detect data quality issues, use the detect_issues action to scan Lead, Account, or Opportunity records. After detecting issues, use the notify_owner action to send notifications to record owners via their preferred channel (Slack, Teams, or Email). Always provide a summary of issues found grouped by object type and priority level.
+
+        actions:
+
+            detect_issues: @actions.detect_issues
+                description: "Scan records for data quality issues"
+                with objectType=...
+                with recordIds=...
+                set @variables.issuesFound = @outputs.issuesFound
+                set @variables.issueDetails = @outputs.issueDetails
+
+
+
+            notify_owner: @actions.notify_owner
+                description: "Notify the record owner about a detected issue"
+                with issueId=...
+                set @variables.notificationStatus = @outputs.notificationStatus
+                set @variables.channelUsed = @outputs.channelUsed
+
+
+
+    actions:
+        
+        detect_issues:
+            description: "Scan Lead, Account, or Opportunity records for data quality violations based on configured validation rules"
+            label: "Detect Data Quality Issues"
+            target: "apex://DataQualityRuleEngine"
+            require_user_confirmation: False
+            include_in_progress_indicator: True
+            progress_indicator_message: "Scanning records for data quality issues..."
+
+            inputs:
+
+                "objectType": string
+                    description: "The standard object API name to scan (Lead, Account, or Opportunity)"
+                    label: "Object Type"
+                    is_required: True
+                    is_user_input: True
+
+
+                "recordIds": list[string]
+                    description: "Optional comma-separated list of specific record IDs to scan"
+                    label: "Record IDs"
+                    is_required: False
+                    is_user_input: False
+
+
+
+            outputs:
+
+                "issuesFound": number
+                    description: "Total number of data quality issues detected"
+                    label: "Issues Found"
+                    is_displayable: True
+                    filter_from_agent: False
+
+
+                "issueDetails": string
+                    description: "Summary of detected issues with field names and suggested fixes"
+                    label: "Issue Details"
+                    is_displayable: True
+                    filter_from_agent: False
+
+
+
+        
+        notify_owner:
+            description: "Send a notification to the record owner about a data quality issue via their preferred channel"
+            label: "Notify Record Owner"
+            target: "apex://NotificationService"
+            require_user_confirmation: False
+            include_in_progress_indicator: True
+            progress_indicator_message: "Sending notification to record owner..."
+
+            inputs:
+
+                "issueId": string
+                    description: "The Data Quality Issue record ID to notify about"
+                    label: "Issue ID"
+                    is_required: True
+                    is_user_input: False
+
+
+
+            outputs:
+
+                "notificationStatus": string
+                    description: "Whether the notification was sent successfully"
+                    label: "Notification Status"
+                    is_displayable: True
+                    filter_from_agent: False
+
+
+                "channelUsed": string
+                    description: "The notification channel used (Email, Slack, or Teams)"
+                    label: "Channel Used"
+                    is_displayable: True
+                    filter_from_agent: False
+
+
+
+        
+
+
+topic field_correction:
+    label: "Field Correction Assistant"
+
+    description: "Assists record owners in correcting data quality issues by applying approved fixes to Salesforce records"
+
+    reasoning:
+        instructions: ->
+            | You are a field correction assistant. When a record owner approves a suggested fix, use the update_field action with approval_status='Approved' to apply the correction. If the owner wants to handle the fix manually or rejects the suggestion, use the update_field action with approval_status='Manual' or 'Rejected'. Always confirm successful updates with the owner and provide the new field value. If an update fails, escalate to an administrator with the error details.
+
+        actions:
+
+            update_field: @actions.update_field
+                description: "Apply an approved field correction or mark as manual/rejected"
+                with issueId=...
+                with approvalStatus=...
+                set @variables.updateStatus = @outputs.updateStatus
+                set @variables.newValue = @outputs.newValue
+                set @variables.errorMessage = @outputs.errorMessage
+
+
+
+    actions:
+        
+        update_field:
+            description: "Apply an owner-approved field correction to the source record"
+            label: "Update Field Value"
+            target: "apex://FieldCorrectionService"
+            require_user_confirmation: True
+            include_in_progress_indicator: True
+            progress_indicator_message: "Updating record field with approved fix..."
+
+            inputs:
+
+                "issueId": string
+                    description: "The Data Quality Issue record ID to fix"
+                    label: "Issue ID"
+                    is_required: True
+                    is_user_input: False
+
+
+                "approvalStatus": string
+                    description: "Owner approval decision: Approved, Rejected, or Manual"
+                    label: "Approval Status"
+                    is_required: True
+                    is_user_input: True
+
+
+
+            outputs:
+
+                "updateStatus": string
+                    description: "Status of the field update operation (Success or Failed)"
+                    label: "Update Status"
+                    is_displayable: True
+                    filter_from_agent: False
+
+
+                "newValue": string
+                    description: "The new field value after correction was applied"
+                    label: "New Value"
+                    is_displayable: True
+                    filter_from_agent: False
+
+
+                "errorMessage": string
+                    description: "Error details if the field update operation failed"
+                    label: "Error Message"
+                    is_displayable: True
+                    filter_from_agent: False
+
+
+
+
+        
+

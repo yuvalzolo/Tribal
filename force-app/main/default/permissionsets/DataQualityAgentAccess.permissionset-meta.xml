@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+            <fullName>DataQualityAgentAccess</fullName>
+            <label>Data Quality Agent Access</label>
+            <description>Grants access to Data Quality Issue object, all agent Apex classes, custom tabs, and the Data Quality Monitor application.</description>
+            
+            <!-- Object Permissions - Full CRUD permissions for custom objects -->
+            
+            <objectPermissions>
+                <allowCreate>true</allowCreate>
+                <allowDelete>true</allowDelete>
+                <allowEdit>true</allowEdit>
+                <allowRead>true</allowRead>
+                <modifyAllRecords>false</modifyAllRecords>
+                <object>Data_Quality_Issue__c</object>
+                <viewAllRecords>false</viewAllRecords>
+            </objectPermissions>
+            
+            
+            <!-- Field Permissions - Make custom fields visible and editable based on isEditable (required fields are excluded) -->
+            
+            <fieldPermissions>
+                
+                <editable>true</editable>
+                
+                <field>Data_Quality_Issue__c.Error_Message__c</field>
+                <readable>true</readable>
+            </fieldPermissions>
+            
+            <fieldPermissions>
+                
+                <editable>true</editable>
+                
+                <field>Data_Quality_Issue__c.Suggested_Fix__c</field>
+                <readable>true</readable>
+            </fieldPermissions>
+            
+            <fieldPermissions>
+                
+                <editable>true</editable>
+                
+                <field>Data_Quality_Issue__c.Owner_User__c</field>
+                <readable>true</readable>
+            </fieldPermissions>
+            
+            <fieldPermissions>
+                
+                <editable>true</editable>
+                
+                <field>Data_Quality_Issue__c.Detected_Date__c</field>
+                <readable>true</readable>
+            </fieldPermissions>
+            
+            <fieldPermissions>
+                
+                <editable>true</editable>
+                
+                <field>Data_Quality_Issue__c.Resolved_Date__c</field>
+                <readable>true</readable>
+            </fieldPermissions>
+            
+            
+            <!-- Tab Settings - Make custom tabs visible -->
+            
+            <tabSettings>
+                <tab>Data_Quality_Issue__c</tab>
+                <visibility>Visible</visibility>
+            </tabSettings>
+            
+            <tabSettings>
+                <tab>DataQualityDashboard</tab>
+                <visibility>Visible</visibility>
+            </tabSettings>
+            
+            
+            <!-- Application Visibility - Make custom applications available -->
+            
+            <applicationVisibilities>
+                <application>DataQualityMonitor</application>
+                <visible>true</visible>
+            </applicationVisibilities>
+            
+            
+            <!-- Apex Class Access - Grant access to Apex classes -->
+            
+            <classAccesses>
+                <apexClass>DataQualityRuleEngine</apexClass>
+                <enabled>true</enabled>
+            </classAccesses>
+            
+            <classAccesses>
+                <apexClass>DataQualityScanBatch</apexClass>
+                <enabled>true</enabled>
+            </classAccesses>
+            
+            <classAccesses>
+                <apexClass>DataQualityScanScheduler</apexClass>
+                <enabled>true</enabled>
+            </classAccesses>
+            
+            <classAccesses>
+                <apexClass>NotificationService</apexClass>
+                <enabled>true</enabled>
+            </classAccesses>
+            
+            <classAccesses>
+                <apexClass>FieldCorrectionService</apexClass>
+                <enabled>true</enabled>
+            </classAccesses>
+            
+            <classAccesses>
+                <apexClass>DQIssueController</apexClass>
+                <enabled>true</enabled>
+            </classAccesses>
+            
+            
+            <!-- Run Flow Permission - Required when project has screen flows -->
+            
+            
+            <hasActivationRequired>false</hasActivationRequired>
+        </PermissionSet>
