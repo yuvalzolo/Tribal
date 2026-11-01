@@ -1,0 +1,27 @@
+{
+  "introduction": "This project adds a small, reusable Apex utility class, RefundEligibilityChecker, that tells callers whether a purchase is still inside its return window. It is intended for developers and admins who need a single, consistent eligibility check from other Apex code, flows, or components.",
+  "requirements": [
+    {
+      "id": 1,
+      "title": "RefundEligibilityChecker Apex Class",
+      "description": "As a developer, I want an Apex class RefundEligibilityChecker with a static isEligible method so that I can check whether a purchase is still within its return window.",
+      "acceptance_criteria": [
+        "An Apex class named RefundEligibilityChecker exists (no existing class with this name was found in the org).",
+        "It exposes a public static method Boolean isEligible(Date purchaseDate, Integer returnWindowDays).",
+        "The method returns true when Date.today() is on or before purchaseDate plus returnWindowDays days; otherwise false.",
+        "The method returns false when purchaseDate or returnWindowDays is null, or returnWindowDays is negative.",
+        "The class does not perform DML or SOQL.",
+        "An Apex unit test can be generated afterwards via Tribal's Trust step covering: within window, exactly on last day, past window, and null/negative inputs."
+      ],
+      "status": "approved",
+      "version": 1,
+      "related_elements": [
+        "AC_RefundEligibilityChecker",
+        "AC_RefundEligibilityCheckerTest"
+      ]
+    }
+  ],
+  "glossary": "Apex class: Server-side Salesforce code unit. Static method: A method called on the class itself without creating an instance. Return window: The number of days after purchase during which a refund or return is allowed. Eligible: Today's date is on or before the purchase date plus the return window days.",
+  "existing_salesforce_elements": "",
+  "project_type": "Improvement"
+}
