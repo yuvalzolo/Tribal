@@ -1,0 +1,153 @@
+<template>
+    <!-- Error State -->
+    <template if:true={hasError}>
+        <div class="slds-box slds-theme_error slds-m-around_small">
+            <div class="slds-text-heading_small slds-m-bottom_x-small">Error</div>
+            <p>{errorMessage}</p>
+        </div>
+    </template>
+
+    <!-- Account Summary Display -->
+    <template if:true={hasSummary}>
+        <div class="account-summary-container">
+            <!-- Account Header Card -->
+            <div class="slds-box slds-theme_default header-card">
+                <div class="slds-text-heading_medium slds-m-bottom_small">{accountName}</div>
+                <div class="slds-grid slds-gutters_small slds-wrap">
+                    <div class="slds-col slds-size_1-of-2">
+                        <div class="slds-text-body_small slds-text-color_weak">Industry</div>
+                        <div class="slds-text-body_regular">{industry}</div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <div class="slds-text-body_small slds-text-color_weak">Type</div>
+                        <div class="slds-text-body_regular">{accountType}</div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1">
+                        <div class="slds-text-body_small slds-text-color_weak">Account Owner</div>
+                        <div class="slds-text-body_regular">{ownerName}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Metrics Cards -->
+            <div class="slds-grid slds-gutters_small slds-wrap metrics-section">
+                <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4">
+                    <div class="slds-box metric-card">
+                        <div class="metric-value">{totalOpportunities}</div>
+                        <div class="metric-label">Opportunities</div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4">
+                    <div class="slds-box metric-card">
+                        <div class="metric-value">{totalOpportunityAmount}</div>
+                        <div class="metric-label">Pipeline Value</div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4">
+                    <div class="slds-box metric-card">
+                        <div class="metric-value">{openCases}</div>
+                        <div class="metric-label">Open Cases</div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4">
+                    <div class="slds-box metric-card">
+                        <div class="metric-value">{contactCount}</div>
+                        <div class="metric-label">Contacts</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Opportunities Section -->
+            <template if:true={hasOpportunities}>
+                <div class="slds-box section-card">
+                    <div class="slds-text-heading_small slds-m-bottom_small">Recent Opportunities</div>
+                    <template for:each={opportunities} for:item="opp">
+                        <div key={opp.opportunityId} class="record-item">
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_7-of-12">
+                                    <div class="record-name">{opp.opportunityName}</div>
+                                    <div class="record-detail">Stage: {opp.stageName}</div>
+                                </div>
+                                <div class="slds-col slds-size_5-of-12 slds-text-align_right">
+                                    <div class="record-amount">
+                                        <template if:true={opp.amount}>
+                                            {opp.amount}
+                                        </template>
+                                        <template if:false={opp.amount}>
+                                            N/A
+                                        </template>
+                                    </div>
+                                    <div class="record-detail">Close: {opp.closeDate}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+
+            <!-- Cases Section -->
+            <template if:true={hasCases}>
+                <div class="slds-box section-card">
+                    <div class="slds-text-heading_small slds-m-bottom_small">Recent Cases</div>
+                    <template for:each={cases} for:item="case">
+                        <div key={case.caseId} class="record-item">
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_8-of-12">
+                                    <div class="record-name">{case.subject}</div>
+                                    <div class="record-detail">Case #{case.caseNumber}</div>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12 slds-text-align_right">
+                                    <div class="case-status">{case.status}</div>
+                                    <div class="record-detail">Priority: {case.priority}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+
+            <!-- Contacts Section -->
+            <template if:true={hasContacts}>
+                <div class="slds-box section-card">
+                    <div class="slds-text-heading_small slds-m-bottom_small">Primary Contacts</div>
+                    <template for:each={contacts} for:item="contact">
+                        <div key={contact.contactId} class="record-item">
+                            <div class="record-name">{contact.contactName}</div>
+                            <div class="record-detail">
+                                <template if:true={contact.title}>{contact.title}</template>
+                                <template if:false={contact.title}>No Title</template>
+                            </div>
+                            <template if:true={contact.email}>
+                                <div class="record-detail">{contact.email}</div>
+                            </template>
+                            <template if:true={contact.phone}>
+                                <div class="record-detail">{contact.phone}</div>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+            </template>
+
+            <!-- Activities Section -->
+            <template if:true={hasActivities}>
+                <div class="slds-box section-card">
+                    <div class="slds-text-heading_small slds-m-bottom_small">Recent Activities</div>
+                    <template for:each={activities} for:item="activity">
+                        <div key={activity.activityId} class="record-item">
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_8-of-12">
+                                    <div class="record-name">{activity.subject}</div>
+                                    <div class="record-detail">Type: {activity.activityType}</div>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12 slds-text-align_right">
+                                    <div class="record-detail">{activity.status}</div>
+                                    <div class="record-detail">{activity.activityDate}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+        </div>
+    </template>
+</template>

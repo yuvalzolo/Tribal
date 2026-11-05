@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningTypeBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+            <masterLabel>Account Summary Chat</masterLabel>
+            <description>Custom Lightning type for rendering account summary data as a rich visual card in Agentforce employee chat</description>
+        </LightningTypeBundle>

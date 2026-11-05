@@ -1,0 +1,78 @@
+{
+  "introduction": "This project delivers an intelligent Account Summary Agent that provides comprehensive account insights through a conversational interface powered by Agentforce. The agent surfaces key information from related objects including Opportunities, Cases, Contacts, and Activities, presenting the data through a custom Lightning Web Component with rich visual formatting. Designed for sales representatives, account managers, and service agents, this solution enables users to quickly understand account health, recent activities, and pipeline status through natural language queries in the Agentforce chat interface.",
+  "requirements": [
+    {
+      "id": 1,
+      "title": "Account Summary Agent with Conversational Interface",
+      "description": "As a sales representative or account manager, I want to ask an Agentforce agent for account summaries so that I can quickly understand account status, related opportunities, cases, contacts, and recent activities through a conversational interface.",
+      "acceptance_criteria": [
+        "Agent responds to natural language queries about accounts (e.g., 'Show me a summary of Acme Corp', 'What's the status of account X?')",
+        "Agent retrieves data from Account, Opportunity, Contact, Case, Task, and Event objects",
+        "Agent presents summary information in a structured, easy-to-read format",
+        "Agent handles account lookup by name or account ID",
+        "Agent provides meaningful responses when account is not found or has no related data",
+        "Agent is accessible through Agentforce chat interface for employee users"
+      ],
+      "status": "approved",
+      "version": 1,
+      "related_elements": []
+    },
+    {
+      "id": 2,
+      "title": "Custom Visual Component for Account Summary Display",
+      "description": "As a user interacting with the Account Summary Agent, I want to see account information displayed in a rich, visual Lightning Web Component so that I can quickly scan key metrics, related records, and account health indicators in an organized layout.",
+      "acceptance_criteria": [
+        "Custom Lightning Web Component renders account summary data with visual formatting",
+        "Component displays account header information (name, industry, type, owner)",
+        "Component shows key metrics: total opportunities, total opportunity amount, open cases count, contact count",
+        "Component lists recent opportunities with name, stage, amount, and close date",
+        "Component lists recent cases with case number, status, priority, and subject",
+        "Component lists primary contacts with name, title, email, and phone",
+        "Component lists recent activities (tasks and events) with subject, status, and due date",
+        "Component uses cards, sections, or tabs to organize different data categories",
+        "Component is responsive and works in desktop and mobile Agentforce chat",
+        "Component integrates with Agentforce chat as a custom output renderer using lightningTypes bundle"
+      ],
+      "status": "approved",
+      "version": 1,
+      "related_elements": []
+    },
+    {
+      "id": 3,
+      "title": "Account Data Retrieval Logic",
+      "description": "As the Account Summary Agent, I need server-side logic to retrieve comprehensive account data from multiple related objects so that I can provide complete and accurate summaries to users.",
+      "acceptance_criteria": [
+        "Apex class retrieves account record by ID or name with error handling",
+        "Apex class queries related Opportunities (limited to top 5 most recent or highest value)",
+        "Apex class queries related Cases (limited to top 5 most recent open cases)",
+        "Apex class queries related Contacts (limited to top 5 primary contacts)",
+        "Apex class queries related Tasks and Events (limited to top 5 most recent)",
+        "Apex class calculates summary metrics: total opportunity count, total opportunity amount, open case count, contact count",
+        "Apex class returns structured data transfer object (DTO) with all account summary information",
+        "Apex class is marked as @InvocableMethod to be callable from the agent",
+        "Apex class includes proper error handling and null checks",
+        "Apex class respects user's record access and sharing rules"
+      ],
+      "status": "approved",
+      "version": 1,
+      "related_elements": []
+    },
+    {
+      "id": 4,
+      "title": "Permission Set for Account Summary Agent Access",
+      "description": "As an administrator, I want a permission set that grants users access to the Account Summary Agent and its components so that I can control which users can use this feature.",
+      "acceptance_criteria": [
+        "Permission set grants read access to Account, Opportunity, Contact, Case, Task, and Event objects",
+        "Permission set grants access to the Account Summary Apex class",
+        "Permission set grants access to the Account Summary Lightning Web Component",
+        "Permission set can be assigned to sales representatives, account managers, and service agents",
+        "Permission set is documented with clear description of its purpose"
+      ],
+      "status": "approved",
+      "version": 1,
+      "related_elements": []
+    }
+  ],
+  "glossary": "**Agentforce**: Salesforce's AI agent platform that enables conversational interactions with users through natural language processing and intelligent automation.\n\n**Agent Script**: Salesforce's scripting language for building Agentforce agents, combining natural language instructions with programmatic logic.\n\n**Lightning Web Component (LWC)**: Modern JavaScript framework for building responsive user interface components in Salesforce.\n\n**lightningTypes Bundle**: A metadata bundle that defines custom data types for Agentforce chat UI, enabling custom output renderers and input editors.\n\n**Output Renderer**: A custom Lightning Web Component that displays agent responses in a rich, visual format within the Agentforce chat interface.\n\n**Data Transfer Object (DTO)**: An Apex class that structures data for transfer between the server and client, marked with @AuraEnabled properties.\n\n**@InvocableMethod**: An Apex annotation that makes a method callable from declarative automation tools including Flows and Agentforce agents.\n\n**Subagent**: A specialized component within an Agent Script that handles specific tasks or topics, with its own actions and instructions.\n\n**Hub-and-Spoke Pattern**: An agent architecture where a central router (hub) directs user requests to specialized subagents (spokes) based on intent.\n\n**Account Summary**: A comprehensive view of an account including related opportunities, cases, contacts, and activities with key metrics and recent records.",
+  "existing_salesforce_elements": ""
+}

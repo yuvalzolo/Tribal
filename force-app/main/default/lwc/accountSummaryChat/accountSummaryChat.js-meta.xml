@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+            <apiVersion>66.0</apiVersion>
+            <description>Agentforce output renderer LWC displaying account summary with header, key metrics, and tabbed sections for opportunities, cases, contacts, and activities</description>
+            <isExposed>true</isExposed>
+            <masterLabel>Account Summary Chat Renderer</masterLabel>
+            <targets>
+                
+                <target>lightning__AgentforceOutput</target>
+                
+            </targets>
+        </LightningComponentBundle>

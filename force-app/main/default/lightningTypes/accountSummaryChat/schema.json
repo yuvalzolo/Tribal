@@ -1,0 +1,171 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Account Summary Chat",
+  "description": "Custom Lightning type for displaying comprehensive account summaries in Agentforce chat",
+  "lightning:type": "@apexClassType/c__AccountSummaryDTO",
+  "type": "object",
+  "properties": {
+    "accountId": {
+      "type": "string",
+      "description": "Salesforce Account ID"
+    },
+    "accountName": {
+      "type": "string",
+      "description": "Account name"
+    },
+    "industry": {
+      "type": "string",
+      "description": "Account industry"
+    },
+    "accountType": {
+      "type": "string",
+      "description": "Account type"
+    },
+    "ownerName": {
+      "type": "string",
+      "description": "Account owner name"
+    },
+    "totalOpportunities": {
+      "type": "integer",
+      "description": "Total count of opportunities"
+    },
+    "totalOpportunityAmount": {
+      "type": "number",
+      "description": "Total opportunity amount"
+    },
+    "openCases": {
+      "type": "integer",
+      "description": "Count of open cases"
+    },
+    "contactCount": {
+      "type": "integer",
+      "description": "Total count of contacts"
+    },
+    "opportunities": {
+      "type": "array",
+      "description": "List of recent opportunities",
+      "items": {
+        "type": "object",
+        "properties": {
+          "opportunityId": {
+            "type": "string",
+            "description": "Opportunity ID"
+          },
+          "opportunityName": {
+            "type": "string",
+            "description": "Opportunity name"
+          },
+          "stageName": {
+            "type": "string",
+            "description": "Opportunity stage"
+          },
+          "amount": {
+            "type": "number",
+            "description": "Opportunity amount"
+          },
+          "closeDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Opportunity close date"
+          }
+        }
+      }
+    },
+    "cases": {
+      "type": "array",
+      "description": "List of recent cases",
+      "items": {
+        "type": "object",
+        "properties": {
+          "caseId": {
+            "type": "string",
+            "description": "Case ID"
+          },
+          "caseNumber": {
+            "type": "string",
+            "description": "Case number"
+          },
+          "status": {
+            "type": "string",
+            "description": "Case status"
+          },
+          "priority": {
+            "type": "string",
+            "description": "Case priority"
+          },
+          "subject": {
+            "type": "string",
+            "description": "Case subject"
+          }
+        }
+      }
+    },
+    "contacts": {
+      "type": "array",
+      "description": "List of primary contacts",
+      "items": {
+        "type": "object",
+        "properties": {
+          "contactId": {
+            "type": "string",
+            "description": "Contact ID"
+          },
+          "contactName": {
+            "type": "string",
+            "description": "Contact name"
+          },
+          "title": {
+            "type": "string",
+            "description": "Contact title"
+          },
+          "email": {
+            "type": "string",
+            "description": "Contact email"
+          },
+          "phone": {
+            "type": "string",
+            "description": "Contact phone"
+          }
+        }
+      }
+    },
+    "activities": {
+      "type": "array",
+      "description": "List of recent activities",
+      "items": {
+        "type": "object",
+        "properties": {
+          "activityId": {
+            "type": "string",
+            "description": "Activity ID"
+          },
+          "activityType": {
+            "type": "string",
+            "description": "Activity type (Task or Event)"
+          },
+          "subject": {
+            "type": "string",
+            "description": "Activity subject"
+          },
+          "status": {
+            "type": "string",
+            "description": "Activity status"
+          },
+          "activityDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Activity date"
+          }
+        }
+      }
+    },
+    "hasError": {
+      "type": "boolean",
+      "description": "Indicates if an error occurred"
+    },
+    "errorMessage": {
+      "type": "string",
+      "description": "Error message if hasError is true"
+    }
+  }
+}
