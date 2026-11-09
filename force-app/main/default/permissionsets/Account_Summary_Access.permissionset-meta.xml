@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+            <fullName>Account_Summary_Access</fullName>
+            <label>Account Summary Agent Access</label>
+            <description>Grants access to the Account Summary Agent components including Apex classes, Lightning Web Component, and read access to Account, Opportunity, Contact, Case, Task, and Event objects</description><!-- Apex Class Access - Grant access to Apex classes -->
+            
+            <classAccesses>
+                <apexClass>AccountSummaryDTO</apexClass>
+                <enabled>true</enabled>
+            </classAccesses>
+            
+            <classAccesses>
+                <apexClass>AccountSummaryController</apexClass>
+                <enabled>true</enabled>
+            </classAccesses>
+            
+
+            <!-- Agent Access - Make Agentforce agents visible (API 63.0+) -->
+            
+            <agentAccesses>
+                <agentName>AccountSummaryAgent</agentName>
+                <enabled>true</enabled>
+            </agentAccesses>
+            
+            
+            <!-- Run Flow Permission - Required when project has screen flows -->
+            
+            
+            <hasActivationRequired>false</hasActivationRequired>
+        </PermissionSet>
